@@ -4,6 +4,7 @@ function setup() {
 	createCanvas(640, 640);
 	//load all assets
 	
+	//reset functionality
 	resetSketch();
 	var button = createButton("reset");
 	button.mousePressed(resetSketch);
@@ -34,6 +35,8 @@ function wallDraw(){
 
 function floorDraw() {
 	//choose a random floor asset and draw it at mouseX,
+	fill(255,0,0);
+	rect(mouseX, mouseY, 50,50);
 }
 
 function mouseClicked(){
