@@ -1,16 +1,22 @@
 //ManyRooms interactive 2D space generation project by Amanda Leiserowitz
 
-var numObjs = 10;
+var numObjs = 20;
+
+var wallArray;
+var floorArray;
+
+var door1, door2;
 
 function setup() {
 	createCanvas(640, 640);
 	//load all assets
-	
+	door1 = loadImage("assets/door1.jpg");
+	door2 = loadImage("assets/door2.jpg");
 	
 	//put all assets in appropriate array
 
-	var floorArray = [];
-	var wallArray = [];
+	floorArray = [];
+	wallArray = [door1, door2];
 	
 	//draw BG
 	resetSketch();
@@ -60,10 +66,18 @@ function searchArray(Array) {
 
 function wallDraw(){
 	//choose a random wall asset and draw it at mouseX, mouseY or mouseX, 70 depending on the type of object
-	//var temp = random(wallArray);
-	//image(temp, mouseX, mouseY);
-	fill(100, 150, 240);
-	rect(mouseX, 70, 200, 370)
+	var temp = random(wallArray);
+	
+	//check if it is a door or plant
+	//if (temp == ) {
+		image(temp, mouseX, 70);
+	//}
+	//else {
+	//	image(temp, mouseX, mouseY);
+	//}
+	
+	//fill(100, 150, 240);
+	//rect(mouseX, 70, 200, 370)
 }
 
 function floorDraw() {
