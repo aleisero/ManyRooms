@@ -10,6 +10,7 @@ var plant1, plant2, plant3;
 var paint1, paint2, paint3;
 var mat, spider, shoe;
 var puddle1, puddle2, puddle3;
+var web, footprints;
 
 function setup() {
 	createCanvas(640, 640);
@@ -31,6 +32,8 @@ function setup() {
 	puddle3 = loadImage("assets/puddle3.png");
 	rug1 = loadImage("assets/rug1.png");
 	rug2 = loadImage("assets/rug2.png");
+	web = loadImage("assets/web.png");
+	footprints = loadImage("assets/footprints.png");
 	
 	//draw BG and set up asset arrays
 	resetSketch();
@@ -66,8 +69,8 @@ function resetSketch() {
 	
 	//fill asset arrays with ALL assets
 	//put all assets in appropriate array
-	floorArray = [mat, spider, shoe, puddle1, puddle2, puddle3, rug1, rug2];
-	wallArray = [door1, door2, door3, plant1, plant2, plant3, paint1, paint2, paint3];
+	floorArray = [mat, spider, shoe, puddle1, puddle2, puddle3, rug1, rug2, footprints];
+	wallArray = [door1, door2, door3, plant1, plant2, plant3, paint1, paint2, paint3, web];
 }
 
 function wallDraw(){
