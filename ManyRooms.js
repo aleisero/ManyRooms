@@ -10,6 +10,7 @@ var plant1, plant2, plant3;
 var paint1, paint2, paint3;
 var mat, spider, shoe;
 var puddle1, puddle2, puddle3;
+var blank;
 
 function setup() {
 	createCanvas(640, 640);
@@ -31,12 +32,9 @@ function setup() {
 	puddle3 = loadImage("assets/puddle3.png");
 	rug1 = loadImage("assets/rug1.png");
 	rug2 = loadImage("assets/rug2.png");
+	blank = loadImage("assets/blank.png");
 	
-	//put all assets in appropriate array
-	floorArray = [mat, spider, shoe, puddle1, puddle2, puddle3, rug1, rug2];
-	wallArray = [door1, door2, door3, plant1, plant2, plant3, paint1, paint2, paint3];
-	
-	//draw BG
+	//draw BG and set up asset arrays
 	resetSketch();
 	
 	//reset functionality
@@ -47,9 +45,14 @@ function setup() {
 
 function draw() {
 	//display instructions
-	textSize(16);
-	text('Click Anywhere!', 50, 20);
 	fill(0,0,0);
+	textSize(16);
+	if (floorArray.length != 0 && wallArray != 0) {
+		text('Click Anywhere!', 50, 20);
+	}
+	else if (floorArray.length == 0 && wallArray == 0) {
+		text('Restart!', 200, 20);
+	}
 }
 
 function resetSketch() {
@@ -67,32 +70,65 @@ function resetSketch() {
 	noStroke();
 	fill(random(fColorArray));
 	rect(0, 440, width, 200);
+	
+	//fill asset arrays with ALL assets
+	//put all assets in appropriate array
+	floorArray = [mat, spider, shoe, puddle1, puddle2, puddle3, rug1, rug2];
+	wallArray = [door1, door2, door3, plant1, plant2, plant3, paint1, paint2, paint3];
 }
 
 function wallDraw(){
-	//choose a random wall asset
-	var temp = random(wallArray);
-	
-	//check if it is a door
-	//if so, place it touching floor
-	if (temp == door1 || temp == door2 || temp == door3) {
-		image(temp, mouseX, 70);
+	//choose a random wall asset IF there are still assets in the array
+	//https://stackoverflow.com/questions/24403732/
+	if (wallArray != undefined || wallArray.length != 0) {
+		var temp = random(wallArray);
+		
+		//check if it is a door
+		//if so, place it touching floor
+		if (temp == door1 || temp == door2 || temp == door3) {
+			imageMode(CORNER);
+			image(temp, mouseX, 70);
+		}
+		//check if it's a potted plant
+		//if so, place it touching floor
+		else if (temp == plant1 || temp == plant2 || temp == plant3) {
+			imageMode(CORNER);
+			image(temp, mouseX, 245);
+		}
+		//if it's a painting place it at mouseX, mouseY
+		else {
+			imageMode(CENTER);
+			image(temp, mouseX, mouseY);
+		}
+		
+		//remove temp from the array
+		//helpful code from https://stackoverflow.com/questions/5767325/ here and in floorDraw()
+		var index = wallArray.indexOf(temp);
+		if (index > -1) {
+			wallArray.splice(index, 1);
+		}
 	}
-	//check if it's a potted plant
-	//if so, place it touching floor
-	else if (temp == plant1 || temp == plant2 || temp == plant3) {
-		image(temp, mouseX, 245);
-	}
-	//if it's a painting place it at mouseX, mouseY
 	else {
-		image(temp, mouseX, mouseY);
+		image(blank, mouseX, mouseY);
 	}
 }
 
 function floorDraw() {
 	//choose a random floor asset and draw it at mouseX, mouseY
-	var temp = random(floorArray);
-	image(random(floorArray), mouseX, mouseY);
+	if (floorArray != undefined || floorArray.length != 0) {
+		imageMode(CENTER);
+		var temp = random(floorArray);
+		image(random(floorArray), mouseX, mouseY);
+	
+		//remove temp from the array
+		var index = floorArray.indexOf(temp);
+		if (index > -1) {
+			floorArray.splice(index, 1);
+		}
+	}
+	else {
+		image(blank, mouseX, mouseY);
+	}
 }
 
 function mouseClicked(){
